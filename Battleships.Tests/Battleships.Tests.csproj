@@ -20,4 +20,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Battleships.ConsoleUI\Battleships.ConsoleUI.csproj" />
+    <ProjectReference Include="..\BattleshipsLibrary\Battleships.Library.csproj" />
+  </ItemGroup>
+
 </Project>
