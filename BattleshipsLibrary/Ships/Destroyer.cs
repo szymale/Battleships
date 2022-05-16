@@ -5,8 +5,8 @@
         public Destroyer()
         {
             Name = "Destroyer";
-            Width = 3;
-            OccupationType = OccupationType.Ship;
+            Size = 3;
+            OccupationType = OccupationType.S;
         }
     }
 }

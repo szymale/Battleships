@@ -8,7 +8,7 @@
         public Cell(int row, int column)
         {
             Coordinates = new Coordinates(row, column);
-            OccupationType = OccupationType.Empty;
+            OccupationType = OccupationType.O;
         }
 
         public string Status
@@ -18,7 +18,7 @@
 
         public bool IsOccupied
         {
-            get { return OccupationType == OccupationType.Ship; }
+            get { return OccupationType == OccupationType.S; }
         }
 
         public bool IsRandomAvailable

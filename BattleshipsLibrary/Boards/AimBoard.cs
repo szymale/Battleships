@@ -4,9 +4,6 @@
     {
         public List<Coordinates> GetOpenRandomCells { get; set; }
         public List<Coordinates> GetHitNeighbours { get; set; }
-        public List<Cell> GetNeighbours(Coordinates coordinates)
-        {
-
-        }
+        //public List<Cell> GetNeighbours(Coordinates coordinates) { }
     }
 }

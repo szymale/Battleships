@@ -4,17 +4,17 @@ namespace Battleships.Library
 {
     public enum OccupationType
     {
-        [Description("o")]
-        Empty,
+        [Description("Empty")]
+        O,
 
-        [Description("m")]
-        Miss,
+        [Description("Miss")]
+        M,
 
-        [Description("x")]
-        Hit,
+        [Description("Hit")]
+        X,
 
-        [Description("s")]
-        Ship
+        [Description("Ship")]
+        S
     }
 
     public enum ShotResult

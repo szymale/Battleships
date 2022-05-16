@@ -5,8 +5,8 @@
         public Submarine()
         {
             Name = "Submarine";
-            Width = 3;
-            OccupationType = OccupationType.Ship;
+            Size = 3;
+            OccupationType = OccupationType.S;
         }
     }
 }

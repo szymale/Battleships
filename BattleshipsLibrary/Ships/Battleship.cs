@@ -5,8 +5,8 @@
         public Battleship()
         {
             Name = "Battleship";
-            Width = 4;
-            OccupationType = OccupationType.Ship;
+            Size = 4;
+            OccupationType = OccupationType.S;
         }
     }
 }

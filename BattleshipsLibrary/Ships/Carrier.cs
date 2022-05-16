@@ -5,8 +5,8 @@
         public Carrier()
         {
             Name = "Carrier";
-            Width = 5;
-            OccupationType = OccupationType.Ship;
+            Size = 5;
+            OccupationType = OccupationType.S;
         }
     }
 }

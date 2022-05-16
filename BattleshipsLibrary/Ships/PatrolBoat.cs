@@ -5,8 +5,8 @@
         public PatrolBoat()
         {
             Name = "Patrol Boat";
-            Width = 2;
-            OccupationType = OccupationType.Ship;
+            Size = 2;
+            OccupationType = OccupationType.S;
         }
     }
 }
