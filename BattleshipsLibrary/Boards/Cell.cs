@@ -1,11 +1,11 @@
-﻿namespace Battleships.Library
+﻿namespace Battleships.Library.Boards
 {
-    public class Panel
+    public class Cell
     {
         public OccupationType OccupationType { get; set; }
         public Coordinates Coordinates { get; set; }
 
-        public Panel(int row, int column)
+        public Cell(int row, int column)
         {
             Coordinates = new Coordinates(row, column);
             OccupationType = OccupationType.Empty;

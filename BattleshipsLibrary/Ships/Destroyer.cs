@@ -1,6 +1,6 @@
 ﻿namespace Battleships.Library.Ships
 {
-    public class Destroyer : Ship
+    public class Destroyer : BaseShip
     {
         public Destroyer()
         {

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Battleships.Library
+namespace Battleships.Library.Ships
 {
-    public abstract class Ship
+    public abstract class BaseShip
     {
         public string? Name { get; set; }
         public int Width { get; set; }
