@@ -8,7 +8,7 @@ namespace Battleships.Library.Ships
 {
     public abstract class BaseShip
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public int Size { get; set; }
         public int Hits { get; set; }
         public OccupationType OccupationType { get; set; }

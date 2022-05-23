@@ -6,7 +6,7 @@
         {
             Name = "Patrol Boat";
             Size = 2;
-            OccupationType = OccupationType.S;
+            OccupationType = OccupationType.PatrolBoat;
         }
     }
 }

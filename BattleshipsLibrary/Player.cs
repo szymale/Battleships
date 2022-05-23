@@ -2,23 +2,29 @@
 using Battleships.Library.Ships;
 using System.Linq;
 using System.Collections;
+using Battleships.Library.Extensions;
 
 namespace Battleships.Library
 {
     public class Player
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public Board Board { get; set; }
         public AimBoard AimBoard { get; set; }
         public List<BaseShip> Ships { get; set; }
 
-        public bool HasLoast
+        public bool HasLost
         {
             get { return Ships.All(x => x.IsSunk); }
         }
 
-        public Player(string name)
+        public Player(string? name)
         {
+            if (name is null)
+            {
+                Console.WriteLine("Player Name should be different than null");
+            }
+
             Name = name;
             Ships = new List<BaseShip>()
             {
@@ -34,20 +40,18 @@ namespace Battleships.Library
 
         public void PlaceShips()
         {
-            Random random = new Random();
+            Random random = new (Guid.NewGuid().GetHashCode());
             foreach ( var ship in Ships )
             {
-                //
                 bool proceed = true;
                 while(proceed)
                 {
-                    var startColumn = random.Next(1,11);
-                    var startRow = random.Next(1, 11);
+                    int startColumn = random.Next(1, 11);
+                    int startRow = random.Next(1, 11);
                     int endRow = startRow;
                     int endColumn = startColumn;
                     var orientation = random.Next(1, 101) % 2;
 
-                    List<int> cells = new List<int>();
                     if (orientation == 0)
                     {
                         for (int i = 1; i < ship.Size; i++)
@@ -63,16 +67,13 @@ namespace Battleships.Library
                         }
                     }
 
-                    if(endRow > 10 || endColumn > 10)
+                    if (endRow > 10 || endColumn > 10)
                     {
                         proceed = true;
                         continue;
                     }
 
-                    var targetCells = Board.Cells.Where(x => x.Coordinates.Row >= startRow
-                                                          && x.Coordinates.Column >= startColumn
-                                                          && x.Coordinates.Row <= endRow
-                                                          && x.Coordinates.Column <= endColumn).ToList();
+                    var targetCells = Board.Cells.Range(startRow, startColumn, endRow, endColumn);
                     
                     if (targetCells.Any(x => x.IsOccupied))
                     {
@@ -98,17 +99,89 @@ namespace Battleships.Library
             {
                 for (int j = 1; j <= 10; j++)
                 {
-                    Console.Write(Board.Cells.First(x => x.Coordinates.Row == i && x.Coordinates.Column == j).Status + "  ");
+                    Console.Write(Board.Cells.At(i, j).Status + "  ");
                 }
                 Console.Write("                                       ");
                 for (int k = 1; k <= 10; k++)
                 {
-                    Console.Write(Board.Cells.First(x => x.Coordinates.Row == i && x.Coordinates.Column == k).Status + "  ");
+                    Console.Write(AimBoard.Cells.At(i, k).Status + "  ");
                 }
                 Console.WriteLine(Environment.NewLine);
             }
 
             Console.WriteLine(Environment.NewLine);
+        }
+
+        public ShotResult ProcessShot(Coordinates coordinates)
+        {
+            var cell = Board.Cells.At(coordinates.Row, coordinates.Column);
+
+            if (!cell.IsOccupied)
+            {
+                Console.WriteLine(Name + " says: Miss!");
+                return ShotResult.Miss;
+            }
+
+            var ship = Ships.First(x => x.OccupationType == cell.OccupationType);
+
+            ship.Hits++;
+
+            Console.WriteLine(Name + " says: Hit!");
+
+            if (ship.IsSunk)
+            {
+                Console.WriteLine(Name + " says: Ship " + ship.Name + " is destoryed!");
+            }
+            return ShotResult.Hit; 
+        }
+
+        public void ProcessShotResult(Coordinates coordinates, ShotResult shot)
+        {
+            var cell = AimBoard.Cells.At(coordinates.Row, coordinates.Column);
+
+            if (shot == ShotResult.Hit)
+            {
+                cell.OccupationType = OccupationType.Hit;
+            }
+            else
+            {
+                cell.OccupationType = OccupationType.Miss;
+            }
+        }
+
+        public Coordinates FireShoot()
+        { 
+            var hitNeighbours = AimBoard.GetHitNeighbours();
+            Coordinates coordinates;
+
+            if (hitNeighbours.Any())
+            {
+                coordinates = SearchingShoot();
+            }
+            else
+            {
+                coordinates = RandomShoot();
+            }
+
+            Console.WriteLine(Name + " says: \"Firing shoot at " + coordinates.Row.ToString() + ", " + coordinates.Column.ToString() + "\"");
+
+            return coordinates;
+        }
+
+        private Coordinates RandomShoot()
+        {
+            var possibleCells = AimBoard.GetOpenRandomCells();
+            Random random = new(Guid.NewGuid().GetHashCode());
+            var cellId = random.Next(possibleCells.Count);
+            return possibleCells[cellId];
+        }
+
+        private Coordinates SearchingShoot()
+        { 
+            Random random = new(Guid.NewGuid().GetHashCode());
+            var hitNeighbours = AimBoard.GetHitNeighbours();
+            var cellId = random.Next(hitNeighbours.Count);
+            return hitNeighbours[cellId];
         }
     }
 }

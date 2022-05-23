@@ -1,4 +1,7 @@
-﻿namespace Battleships.Library.Boards
+﻿using Battleships.Library.Extensions;
+using System.ComponentModel;
+
+namespace Battleships.Library.Boards
 {
     public class Cell
     {
@@ -8,25 +11,25 @@
         public Cell(int row, int column)
         {
             Coordinates = new Coordinates(row, column);
-            OccupationType = OccupationType.O;
+            OccupationType = OccupationType.Empty;
         }
 
         public string Status
         { 
-            get { return OccupationType.ToString(); }
+            get { return OccupationType.GetAttributeOfType<DescriptionAttribute>().Description; }
         }
 
         public bool IsOccupied
         {
-            get { return OccupationType == OccupationType.S; }
-        }
-
-        public bool IsRandomAvailable
-        {
             get
             {
-                return (Coordinates.Row % 2 == 0 && Coordinates.Column % 2 == 0)
-                    || (Coordinates.Row % 2 == 1 && Coordinates.Column % 2 == 1);
+                return OccupationType == OccupationType.Battleship
+                    || OccupationType == OccupationType.Destroyer
+                    || OccupationType == OccupationType.Cruiser
+                    || OccupationType == OccupationType.Submarine
+                    || OccupationType == OccupationType.PatrolBoat
+                    || OccupationType == OccupationType.Carrier;
+
             }
         }
     }

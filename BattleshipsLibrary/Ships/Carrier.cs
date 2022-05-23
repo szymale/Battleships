@@ -6,7 +6,7 @@
         {
             Name = "Carrier";
             Size = 5;
-            OccupationType = OccupationType.S;
+            OccupationType = OccupationType.Carrier;
         }
     }
 }

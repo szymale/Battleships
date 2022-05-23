@@ -6,7 +6,7 @@
         {
             Name = "Destroyer";
             Size = 3;
-            OccupationType = OccupationType.S;
+            OccupationType = OccupationType.Destroyer;
         }
     }
 }
